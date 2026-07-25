@@ -1,0 +1,14 @@
+# Compiled Executable
+visual-sort
+
+# MacOS
+.DS_Store
+
+# VIM
+*.swp
+*.swo
+
+# Objects
+*.o
+
+
