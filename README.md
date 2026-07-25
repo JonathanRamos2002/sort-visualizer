@@ -6,7 +6,17 @@ A sorting algorithm visualizer written in C with Raylib. Intended to be used as 
 
 This project has a dependency (Raylib), and uses git submodules. To properly clone the repository use this command: git clone --recursive https://github.com/JonathanRamos2002/sort-visualizer.git
 
-if you cloned without the --recursive flag, initialize the submodule with the following command: git submodule update --init --recursive
+If you cloned without the --recursive flag, initialize the submodule with the following command: git submodule update --init --recursive
+
+## Dependency
+
+After cloning build raylib to ensure the library is readily avialable with the following commands. 
+
+1. cd raylib/src
+
+2. make
+
+3. cd ../..
 
 ## Build
 
