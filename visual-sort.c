@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 #define WIDTH 900
 #define HEIGHT 600
@@ -9,6 +10,10 @@
 #define NUMBARS 25
 
 int bars[NUMBARS];
+
+int sort_i = 0;
+int sort_j = 0;
+bool sorted = false;
 
 
 // Print the bars array to stdout, shows the index and value
@@ -27,6 +32,14 @@ void CreateBars(){
 }
 
 
+// Swap two elements given indexes and an array
+void Swap(int i, int j, int arr[]){
+	int temp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = temp;
+}
+
+
 // Randomly shuffle the bars array using a generated index 
 void ShuffleBars(){
 	srand(time(NULL)); // seed the number generator using current times
@@ -34,10 +47,8 @@ void ShuffleBars(){
 	for(int i = NUMBARS - 1; i > 0; i--){
 		int random_num = rand() % (i + 1); // generating random number between 0 and i
 		
-		// randomly swap 
-		int temp = bars[i];
-		bars[i] = bars[random_num];
-		bars[random_num] = temp;
+		// randomly swap
+		Swap(i, random_num, bars); 
 	}
 }
 
@@ -55,6 +66,29 @@ void DrawBars(){
 }
 
 
+// Perform a single step of the bubble sort algorithm
+void BubbleSortStep(){
+	if(sorted)
+		return;
+
+	// if current element is bigger than the next, bubble it up 
+	if(bars[sort_j] > bars[sort_j + 1]){
+		Swap(sort_j, sort_j + 1, bars);
+	}	
+	sort_j++;
+
+	// check if sort_j is still within bounds of bars array
+	if(sort_j >= NUMBARS - sort_i - 1){
+		sort_j = 0;
+		sort_i++;	
+
+		// check if sorting is still necessary
+		if(sort_i >= NUMBARS - 1){ // entire array has been checked and sorted 
+			sorted = true;
+		}
+	}
+}
+
 int main(void)
 {
 
@@ -68,7 +102,11 @@ int main(void)
 
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+	BubbleSortStep();
+	
         BeginDrawing();
+
+	ClearBackground(BLACK);
 
 	DrawBars();
 
